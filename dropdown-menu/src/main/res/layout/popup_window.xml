@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <ListView
+        android:id="@+id/popup_window_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:scrollbarStyle="outsideOverlay">
+    </ListView>
+    <RelativeLayout
+        android:id="@+id/popup_window_overlay"
+        android:layout_below="@id/popup_window_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#70000000">
+    </RelativeLayout>
+</RelativeLayout>

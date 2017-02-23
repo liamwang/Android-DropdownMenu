@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.exblr.dropdownmenu.sample.MainActivity">
+
+<com.exblr.dropdownmenu.DropdownMenu
+    android:id="@+id/dropdown_menu"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="这里应该是列表"/>
+</RelativeLayout>
