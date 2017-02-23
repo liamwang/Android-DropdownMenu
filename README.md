@@ -1,18 +1,21 @@
 # Android-DropdownMenu
-An android dropdown menu with easy to customize.
-一个易扩展的 Android 下拉菜单组件。
+This is an android dropdown menu with easy to customize.
+这是一个易于扩展的 Android 下拉菜单组件。
 
-![](https://raw.githubusercontent.com/liamwang/Android-Dropdown/master/graphics/default.gif)
+![](https://raw.githubusercontent.com/liamwang/Android-DropdownMenu/master/graphics/default.gif)
 
 ## 如何使用
 
 At present the code is pre-release, you can now use it by importing local package.
+
 目前还未正式发布，暂时只能能过引入本地包的方式使用：
+
 ```groovy
 compile project(path: ':dropdown-menu')
 ```
 
-Then, add the DropdownMenu to your layout and give it a id.
+Then, add the DropdownMenu to your layout and give it an id.
+
 然后把 DropdownMenu 添加到Layout文件中，并给定一个ID。
 
 ```xml
