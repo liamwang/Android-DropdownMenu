@@ -1,5 +1,6 @@
 # Android-DropdownMenu
 This is an android dropdown menu with easy to customize.
+
 这是一个易于扩展的 Android 下拉菜单组件。
 
 ![](https://raw.githubusercontent.com/liamwang/Android-DropdownMenu/master/graphics/default.gif)
