@@ -5,19 +5,30 @@ This is an android dropdown menu with easy to customize.
 
 ![](https://raw.githubusercontent.com/liamwang/Android-DropdownMenu/master/graphics/default.gif)
 
-## 如何使用
+## Download
 
-At present the code is pre-release, you can now use it by importing local package.
+Maven:
 
-目前还未正式发布，暂时只能能过引入本地包的方式使用：
-
-```groovy
-compile project(path: ':dropdown-menu')
+```xml
+<dependency>
+  <groupId>com.exblr</groupId>
+  <artifactId>dropdown-menu</artifactId>
+  <version>0.0.1</version>
+  <type>pom</type>
+</dependency>
 ```
 
-Then, add the DropdownMenu to your layout and give it an id.
+Gradle:
 
-然后把 DropdownMenu 添加到Layout文件中，并给定一个ID。
+```groovy
+compile 'com.exblr:dropdown-menu:0.0.1'
+```
+
+## How
+
+Add the DropdownMenu to your layout and give it an id.
+
+把 DropdownMenu 添加到Layout文件中，并给定一个ID。
 
 ```xml
 <com.exblr.dropdownmenu.DropdownMenu
@@ -38,6 +49,7 @@ mDropdownMenu.add(String, List<DropdownListItem>);
 ```java
 mDropdownMenu.add(String, OnMenuOpenListener);
 ```
+
 此方法可对菜单进行灵活的自定义，比如自定义打开菜单的方式和菜单的内容，可以是 PopupWindow、PopupMenu 或 另一个Activity。
 
 
