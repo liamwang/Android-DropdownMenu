@@ -1,7 +1,8 @@
 # Android-DropdownMenu
+
 This is an android dropdown menu with easy to customize.
 
-这是一个易于扩展的 Android 下拉菜单组件。
+[中文文档](https://github.com/liamwang/Android-DropdownMenu/blob/master/README-CN.md)
 
 ![](https://raw.githubusercontent.com/liamwang/Android-DropdownMenu/master/graphics/default.gif)
 
@@ -28,8 +29,6 @@ compile 'com.exblr:dropdown-menu:0.0.1'
 
 Add the DropdownMenu to your layout and give it an id.
 
-把 DropdownMenu 添加到Layout文件中，并给定一个ID。
-
 ```xml
 <com.exblr.dropdownmenu.DropdownMenu
     android:id="@+id/dropdown_menu"
@@ -37,19 +36,18 @@ Add the DropdownMenu to your layout and give it an id.
     android:layout_height="50dp"/>
 ```
 
-在对应的 Activity 或 Fragment 文件中，调用DropdownMenu 对象的 **add** 方法来添加菜单项。
+Then, Call DropdownMenu object's **Add** methed in Corresponding Activity or Fragment files, to add the menu tab item.
 
 ```java
 mDropdownMenu.add(String, List<DropdownListItem>);
 ```
-第一个参数为菜单标题，第二个参数为该菜单对应的下拉列表数据。
+The first parameter for the menu title, the second parameter for the menu drop-down list data.
 
-此 add 方法还有一个重载方法：
+And the **add** method has an overloaded method：
 
 ```java
 mDropdownMenu.add(String, OnMenuOpenListener);
 ```
 
-此方法可对菜单进行灵活的自定义，比如自定义打开菜单的方式和菜单的内容，可以是 PopupWindow、PopupMenu 或 另一个Activity。
-
+This method can be used for customize menus flexible, such as customizing menu content, or the way of opening the menu as PopupWindow, PopupMenu, or another Activity.
 
