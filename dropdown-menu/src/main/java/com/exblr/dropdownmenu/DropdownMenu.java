@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -98,6 +99,33 @@ public class DropdownMenu extends LinearLayout {
     }
 
     public void add(String title, List<DropdownListItem> list) {
+        ListView listView = new ListView(mContext);
+        listView.setLayoutParams(new LayoutParams(-1, -2));
+        listView.setScrollBarStyle(SCROLLBARS_OUTSIDE_OVERLAY);
+
+        final PopupWindow popupWindow = createPopupWindow(title, listView);
+        final DropdownListAdapter defaultAdapter = new DropdownListAdapter(mContext, title, list);
+
+        listView.setAdapter(defaultAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                defaultAdapter.setSelectedItem(position);
+                setCurrentTitle(defaultAdapter.getSelectedItemString());
+                popupWindow.dismiss();
+            }
+        });
+    }
+
+    public void add(String title, View contentView) {
+        createPopupWindow(title, contentView);
+    }
+
+    public void notifyMenuCanceled() {
+        setTabNormal(mCurrentTabIndex, null);
+    }
+
+    private PopupWindow createPopupWindow(String title, View contentView) {
         View popupWindowView = LayoutInflater.from(mContext).inflate(R.layout.popup_window, null, false);
         final PopupWindow popupWindow = new PopupWindow(popupWindowView, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, true);
         popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
@@ -108,6 +136,9 @@ public class DropdownMenu extends LinearLayout {
             }
         });
 
+        FrameLayout contentContainer = (FrameLayout) popupWindowView.findViewById(R.id.popup_window_content_container);
+        contentContainer.addView(contentView);
+
         View overlay = popupWindowView.findViewById(R.id.popup_window_overlay);
         overlay.setOnClickListener(new OnClickListener() {
             @Override
@@ -116,29 +147,14 @@ public class DropdownMenu extends LinearLayout {
             }
         });
 
-        final DropdownListAdapter defaultAdapter = new DropdownListAdapter(mContext, title, list);
-        ListView listView = (ListView) popupWindowView.findViewById(R.id.popup_window_list_view);
-        listView.setAdapter(defaultAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                defaultAdapter.setSelectedItem(position);
-                setCurrentTitle(defaultAdapter.getSelectedItemString());
-                popupWindow.dismiss();
-            }
-        });
-
-
         add(title, new OnMenuOpenListener() {
             @Override
             public void onOpen(View tabView, int tabIndex) {
                 popupWindow.showAsDropDown(DropdownMenu.this);
             }
         });
-    }
 
-    public void notifyMenuCanceled() {
-        setTabNormal(mCurrentTabIndex, null);
+        return popupWindow;
     }
 
     private View addTab(String title) {

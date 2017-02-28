@@ -3,16 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <ListView
-        android:id="@+id/popup_window_list_view"
+    <FrameLayout
+        android:id="@+id/popup_window_content_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffffff"
-        android:scrollbarStyle="outsideOverlay">
-    </ListView>
+        android:background="#fff">
+       <!-- <ListView
+            android:id="@+id/popup_window_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbarStyle="outsideOverlay">
+        </ListView>-->
+    </FrameLayout>
     <RelativeLayout
         android:id="@+id/popup_window_overlay"
-        android:layout_below="@id/popup_window_list_view"
+        android:layout_below="@id/popup_window_content_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#70000000">
