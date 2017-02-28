@@ -43,6 +43,7 @@ public class DropdownMenu extends LinearLayout {
     private Context mContext;
 
     private List<OnMenuOpenListener> mOnMenuOpenListeners;
+    private PopupWindow mCurrentPopupWindow;
 
     public DropdownMenu(Context context) {
         this(context, null);
@@ -121,8 +122,14 @@ public class DropdownMenu extends LinearLayout {
         createPopupWindow(title, contentView);
     }
 
-    public void notifyMenuCanceled() {
+    public void notifyMenuClosed() {
         setTabNormal(mCurrentTabIndex, null);
+    }
+
+    public void dismissCurrentPopupWindow(){
+        if(mCurrentPopupWindow!=null){
+            mCurrentPopupWindow.dismiss();
+        }
     }
 
     private PopupWindow createPopupWindow(String title, View contentView) {
@@ -132,7 +139,8 @@ public class DropdownMenu extends LinearLayout {
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                notifyMenuCanceled();
+                notifyMenuClosed();
+                mCurrentPopupWindow = null;
             }
         });
 
@@ -151,6 +159,7 @@ public class DropdownMenu extends LinearLayout {
             @Override
             public void onOpen(View tabView, int tabIndex) {
                 popupWindow.showAsDropDown(DropdownMenu.this);
+                mCurrentPopupWindow = popupWindow;
             }
         });
 
