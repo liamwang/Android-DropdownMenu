@@ -14,7 +14,7 @@ Maven:
 <dependency>
   <groupId>com.exblr</groupId>
   <artifactId>dropdown-menu</artifactId>
-  <version>0.0.1</version>
+  <version>1.0.0</version>
   <type>pom</type>
 </dependency>
 ```
@@ -22,7 +22,7 @@ Maven:
 Gradle:
 
 ```groovy
-compile 'com.exblr:dropdown-menu:0.0.1'
+compile 'com.exblr:dropdown-menu:1.0.0'
 ```
 
 ## How
@@ -39,15 +39,21 @@ Add the DropdownMenu to your layout and give it an id.
 Then, Call DropdownMenu object's **Add** methed in Corresponding Activity or Fragment files, to add the menu tab item.
 
 ```java
-mDropdownMenu.add(String, List<DropdownListItem>);
+public void add(String title, List<DropdownListItem> list)
 ```
 The first parameter for the menu title, the second parameter for the menu drop-down list data.
 
-And the **add** method has an overloaded method：
+And there two  overloaded public  method of **add** :
 
 ```java
-mDropdownMenu.add(String, OnMenuOpenListener);
+public void add(String title, OnMenuOpenListener onMenuOpenListener)
 ```
 
-This method can be used for customize menus flexible, such as customizing menu content, or the way of opening the menu as PopupWindow, PopupMenu, or another Activity.
+and
+
+```java
+public void add(String title, View contentView)
+```
+
+These two methods make customization more flexible, such as customizing menu content or the way of opening the menu such as PopupWindow, PopupMenu, or another Activity.
 

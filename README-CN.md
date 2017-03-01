@@ -12,7 +12,7 @@ Maven:
 <dependency>
   <groupId>com.exblr</groupId>
   <artifactId>dropdown-menu</artifactId>
-  <version>0.0.1</version>
+  <version>1.0.0</version>
   <type>pom</type>
 </dependency>
 ```
@@ -20,7 +20,7 @@ Maven:
 Gradle:
 
 ```groovy
-compile 'com.exblr:dropdown-menu:0.0.1'
+compile 'com.exblr:dropdown-menu:1.0.0'
 ```
 
 ## 如何使用
@@ -37,16 +37,23 @@ compile 'com.exblr:dropdown-menu:0.0.1'
 然后在对应的 Activity 或 Fragment 文件中，调用DropdownMenu 对象的 **add** 方法来添加菜单项。
 
 ```java
-mDropdownMenu.add(String, List<DropdownListItem>);
+public void add(String title, List<DropdownListItem> list)
 ```
+
 第一个参数为菜单标题，第二个参数为该菜单对应的下拉列表数据。
 
-此 add 方法还有一个重载方法：
+此 add 方法还有两个公开的重载方法：
 
 ```java
-mDropdownMenu.add(String, OnMenuOpenListener);
+public void add(String title, OnMenuOpenListener onMenuOpenListener)
 ```
 
-此方法可对菜单进行灵活的自定义，比如自定义打开菜单的方式和菜单的内容，可以是 PopupWindow、PopupMenu 或 另一个Activity。
+和
+
+```java
+public void add(String title, View contentView)
+```
+
+这两个方法使得菜单的自定义更加灵活，比如自定义菜单的内容和打开菜单的方式，如 PopupWindow、PopupMenu 或另一个Activity。
 
 
