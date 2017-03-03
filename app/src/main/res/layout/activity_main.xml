@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -10,7 +10,15 @@
     <com.exblr.dropdownmenu.DropdownMenu
         android:id="@+id/dropdown_menu"
         android:layout_width="match_parent"
-        android:layout_height="50dp"/>
+        android:layout_height="50dp"
+        app:ddmBorderColor="#EEEEEE"
+        app:ddmDividerColor="#DDDDDD"
+        app:ddmDividerPadding="13dp"
+        app:ddmTabIconNormal="@drawable/ic_arrow_down"
+        app:ddmTabIconSelected="@drawable/ic_arrow_up"
+        app:ddmTabTextColorNormal="#666666"
+        app:ddmTabTextColorSelected="#FF008DF2"
+        app:ddmTabTextSize="13sp"/>
 
     <TextView
         android:layout_width="match_parent"

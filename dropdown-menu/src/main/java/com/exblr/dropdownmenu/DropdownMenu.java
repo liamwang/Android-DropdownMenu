@@ -1,6 +1,7 @@
 package com.exblr.dropdownmenu;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
@@ -28,19 +29,18 @@ import java.util.List;
 
 public class DropdownMenu extends LinearLayout {
 
-    private int mCurrentTabIndex;
-    private int mTabTextSize = 13;
-    private int mTabNormalColor = 0xFF666666;
-    private int mTabSelectedColor = 0xFF008DF2;
-    private int mTabArrowLeftPadding = 5;
-
-    private int mDividerColor = 0xFFdddddd;
-    private int mDividerPadding = 13;
-
-    private int mLineHeight = 1;
-    private int mLineColor = 0xFFeeeeee;
+    private int mTabTextSize;
+    private int mTabTextColorNormal;
+    private int mTabTextColorSelected;
+    private int mDividerColor;
+    private int mDividerPadding;
+    private int mBorderColor;
+    private int mTabIconNormal;
+    private int mTabIconSelected;
 
     private Context mContext;
+
+    private int mCurrentTabIndex;
 
     private List<OnMenuOpenListener> mOnMenuOpenListeners;
     private PopupWindow mCurrentPopupWindow;
@@ -60,8 +60,18 @@ public class DropdownMenu extends LinearLayout {
 
         mContext = context;
         mDividerPadding = dpToPx(mContext, mDividerPadding);
-        mTabArrowLeftPadding = dpToPx(mContext, mTabArrowLeftPadding);
         mOnMenuOpenListeners = new ArrayList<>();
+
+        TypedArray t = context.obtainStyledAttributes(attrs, R.styleable.DropdownMenu);
+        mTabTextSize = t.getDimensionPixelSize(R.styleable.DropdownMenu_ddmTabTextSize, 13);
+        mTabTextColorNormal = t.getColor(R.styleable.DropdownMenu_ddmTabTextColorNormal, 0xFF666666);
+        mTabTextColorSelected = t.getColor(R.styleable.DropdownMenu_ddmTabTextColorSelected, 0xFF008DF2);
+        mDividerColor = t.getColor(R.styleable.DropdownMenu_ddmDividerColor, 0xFFDDDDDD);
+        mDividerPadding = t.getDimensionPixelSize(R.styleable.DropdownMenu_ddmDividerPadding, dpToPx(mContext, 13));
+        mBorderColor = t.getColor(R.styleable.DropdownMenu_ddmBorderColor, 0xFFEEEEEE);
+        mTabIconNormal = t.getResourceId(R.styleable.DropdownMenu_ddmTabIconNormal, R.drawable.ic_arrow_down);
+        mTabIconSelected = t.getResourceId(R.styleable.DropdownMenu_ddmTabIconSelected, R.drawable.ic_arrow_up);
+        t.recycle();
     }
 
     public interface OnMenuOpenListener {
@@ -72,8 +82,8 @@ public class DropdownMenu extends LinearLayout {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        int measureHeight = getMeasuredHeight();
-        int measuredWidth = getMeasuredWidth();
+        int w = getWidth();
+        int h = getHeight();
 
         Paint paint = new Paint();
         paint.setAntiAlias(true);
@@ -85,13 +95,14 @@ public class DropdownMenu extends LinearLayout {
             if (child == null || child.getVisibility() == View.GONE) {
                 continue;
             }
-            canvas.drawLine(child.getRight(), mDividerPadding, child.getRight(), measureHeight - mDividerPadding, paint);
+            canvas.drawLine(child.getRight(), mDividerPadding, child.getRight(), h - mDividerPadding, paint);
         }
 
         // 绘制上下边框
-        paint.setColor(mLineColor);
-        canvas.drawRect(0, 0, measuredWidth, mLineHeight, paint);
-        canvas.drawRect(0, measureHeight - mLineHeight, measuredWidth, measureHeight, paint);
+        int lineHeight = 1;
+        paint.setColor(mBorderColor);
+        canvas.drawRect(0, 0, w, lineHeight, paint);
+        canvas.drawRect(0, h - lineHeight, w, h, paint);
     }
 
     public void add(String title, OnMenuOpenListener onMenuOpenListener) {
@@ -126,8 +137,8 @@ public class DropdownMenu extends LinearLayout {
         setTabNormal(mCurrentTabIndex, null);
     }
 
-    public void dismissCurrentPopupWindow(){
-        if(mCurrentPopupWindow!=null){
+    public void dismissCurrentPopupWindow() {
+        if (mCurrentPopupWindow != null) {
             mCurrentPopupWindow.dismiss();
         }
     }
@@ -170,12 +181,13 @@ public class DropdownMenu extends LinearLayout {
         TextView titleTV = new TextView(mContext);
         titleTV.setGravity(Gravity.CENTER);
         titleTV.setText(title);
-        titleTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, mTabTextSize);
-        titleTV.setTextColor(mTabNormalColor);
+        titleTV.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTabTextSize);
+        titleTV.setTextColor(mTabTextColorNormal);
         titleTV.setSingleLine();
         titleTV.setEllipsize(TextUtils.TruncateAt.END);
-        titleTV.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.level_filter), null);
-        titleTV.setCompoundDrawablePadding(mTabArrowLeftPadding);
+        // titleTV.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.level_filter), null);
+        titleTV.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(mTabIconNormal), null);
+        titleTV.setCompoundDrawablePadding(dpToPx(mContext, 5));
 
         RelativeLayout tabLayout = new RelativeLayout(mContext);
         RelativeLayout.LayoutParams titleParams = new RelativeLayout.LayoutParams(-2, -2);
@@ -205,17 +217,19 @@ public class DropdownMenu extends LinearLayout {
 
     private void setTabNormal(int index, String title) {
         TextView tv = getTabTextViewAt(index);
-        tv.setTextColor(mTabNormalColor);
-        tv.getCompoundDrawables()[2].setLevel(0);
+        tv.setTextColor(mTabTextColorNormal);
+        //tv.getCompoundDrawables()[2].setLevel(0);
+        tv.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(mTabIconNormal), null);
         if (title != null && title != "") {
             tv.setText(title);
         }
     }
 
-    private void setTabActive(int index) {
-        TextView tabTextView = getTabTextViewAt(index);
-        tabTextView.setTextColor(mTabSelectedColor);
-        tabTextView.getCompoundDrawables()[2].setLevel(1);
+    private void setTabSelected(int index) {
+        TextView tv = getTabTextViewAt(index);
+        tv.setTextColor(mTabTextColorSelected);
+        //tabTextView.getCompoundDrawables()[2].setLevel(1);
+        tv.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(mTabIconSelected), null);
     }
 
     private class MyTabClickedListener implements OnClickListener {
@@ -228,7 +242,7 @@ public class DropdownMenu extends LinearLayout {
         @Override
         public void onClick(View view) {
             setTabNormal(mCurrentTabIndex, null);
-            setTabActive(mIndex);
+            setTabSelected(mIndex);
             mCurrentTabIndex = mIndex;
 
             for (int i = 0; i < mOnMenuOpenListeners.size(); i++) {

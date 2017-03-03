@@ -56,4 +56,20 @@ public void add(String title, View contentView)
 
 这两个方法使得菜单的自定义更加灵活，比如自定义菜单的内容和打开菜单的方式，如 PopupWindow、PopupMenu 或另一个Activity。
 
+你还可以像下面这样通过自定义以 `ddm` 为前缀的属性来设置 DropdownMenu 的样式 :
+```xml
+    <com.exblr.dropdownmenu.DropdownMenu
+        android:id="@+id/dropdown_menu"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:ddmBorderColor="#EEEEEE"
+        app:ddmDividerColor="#DDDDDD"
+        app:ddmDividerPadding="13dp"
+        app:ddmTabIconNormal="@drawable/ic_arrow_down"
+        app:ddmTabIconSelected="@drawable/ic_arrow_up"
+        app:ddmTabTextColorNormal="#666666"
+        app:ddmTabTextColorSelected="#FF008DF2"
+        app:ddmTabTextSize="13sp"/>
+```
+
 
