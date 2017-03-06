@@ -146,7 +146,8 @@ public class DropdownMenu extends LinearLayout {
     private PopupWindow createPopupWindow(String title, View contentView) {
         View popupWindowView = LayoutInflater.from(mContext).inflate(R.layout.popup_window, null, false);
         final PopupWindow popupWindow = new PopupWindow(popupWindowView, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, true);
-        popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
+        /*popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
+        popupWindow.setOutsideTouchable(true);*/
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
