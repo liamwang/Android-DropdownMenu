@@ -1,12 +1,13 @@
 package com.exblr.dropdownmenu;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -59,11 +60,10 @@ public class DropdownMenu extends LinearLayout {
         setWillNotDraw(false);
 
         mContext = context;
-        mDividerPadding = dpToPx(mContext, mDividerPadding);
         mOnMenuOpenListeners = new ArrayList<>();
 
         TypedArray t = context.obtainStyledAttributes(attrs, R.styleable.DropdownMenu);
-        mTabTextSize = t.getDimensionPixelSize(R.styleable.DropdownMenu_ddmTabTextSize, 13);
+        mTabTextSize = t.getDimensionPixelSize(R.styleable.DropdownMenu_ddmTabTextSize, spToPx(mContext, 13));
         mTabTextColorNormal = t.getColor(R.styleable.DropdownMenu_ddmTabTextColorNormal, 0xFF666666);
         mTabTextColorSelected = t.getColor(R.styleable.DropdownMenu_ddmTabTextColorSelected, 0xFF008DF2);
         mDividerColor = t.getColor(R.styleable.DropdownMenu_ddmDividerColor, 0xFFDDDDDD);
@@ -255,7 +255,11 @@ public class DropdownMenu extends LinearLayout {
         }
     }
 
-    public static int dpToPx(Context context, int dp) {
+    private int  dpToPx(Context context, int dp) {
         return (int) (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics()) + 0.5f);
+    }
+
+    private int spToPx(Context context, int sp) {
+        return (int) (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics()) + 0.5f);
     }
 }

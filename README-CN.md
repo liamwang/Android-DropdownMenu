@@ -12,7 +12,7 @@ Maven:
 <dependency>
   <groupId>com.exblr</groupId>
   <artifactId>dropdown-menu</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <type>pom</type>
 </dependency>
 ```
@@ -20,7 +20,7 @@ Maven:
 Gradle:
 
 ```groovy
-compile 'com.exblr:dropdown-menu:1.0.1'
+compile 'com.exblr:dropdown-menu:1.0.2'
 ```
 
 ## 如何使用
