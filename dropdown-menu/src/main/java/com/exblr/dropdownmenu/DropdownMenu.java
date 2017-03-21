@@ -1,5 +1,6 @@
 package com.exblr.dropdownmenu;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -8,11 +9,14 @@ import android.graphics.Paint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -146,8 +150,9 @@ public class DropdownMenu extends LinearLayout {
     private PopupWindow createPopupWindow(String title, View contentView) {
         View popupWindowView = LayoutInflater.from(mContext).inflate(R.layout.popup_window, null, false);
         final PopupWindow popupWindow = new PopupWindow(popupWindowView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, true);
-        /*popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
-        popupWindow.setOutsideTouchable(true);*/
+        // popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
@@ -155,6 +160,23 @@ public class DropdownMenu extends LinearLayout {
                 mCurrentPopupWindow = null;
             }
         });
+
+        // Fix PopupWindow showAsDropDown problem in android 7.x.
+        if (android.os.Build.VERSION.SDK_INT >= 24) {
+            ViewTreeObserver vto = getViewTreeObserver();
+            vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    int[] location = new int[2];
+                    getLocationOnScreen(location);
+                    int x = location[0];
+                    final int y = location[1];
+                    int screenHeight = ((WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getHeight();
+                    popupWindow.setHeight(screenHeight - y - getHeight());
+                }
+            });
+        }
 
         FrameLayout contentContainer = (FrameLayout) popupWindowView.findViewById(R.id.popup_window_content_container);
         contentContainer.addView(contentView);
@@ -255,7 +277,7 @@ public class DropdownMenu extends LinearLayout {
         }
     }
 
-    private int  dpToPx(Context context, int dp) {
+    private int dpToPx(Context context, int dp) {
         return (int) (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics()) + 0.5f);
     }
 
