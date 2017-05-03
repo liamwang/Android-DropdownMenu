@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -150,7 +151,7 @@ public class DropdownMenu extends LinearLayout {
     private PopupWindow createPopupWindow(String title, View contentView) {
         View popupWindowView = LayoutInflater.from(mContext).inflate(R.layout.popup_window, null, false);
         final PopupWindow popupWindow = new PopupWindow(popupWindowView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, true);
-        // popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
+        popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000)); // 解决 5.1 下再次点击Tab无法关闭PopupWindow问题
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
